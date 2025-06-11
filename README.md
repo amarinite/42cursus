@@ -1,4 +1,6 @@
 # 42cursus progress 👩‍💻
+[![oakoudad's 42 stats](https://badge.mediaplus.ma/darkgray/amarquez)](https://github.com/oakoudad/badge42)
+
 My personal repo for my progress in 42 Barcelona. 
 ## Common Core
 
