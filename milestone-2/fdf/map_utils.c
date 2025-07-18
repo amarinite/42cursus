@@ -12,20 +12,6 @@
 
 #include "fdf.h"
 
-// NO VALE
-t_point	*initialize_point(int x, int y, int z)
-{
-	t_point	*newpoint;
-
-	newpoint = (t_point *)malloc(sizeof(t_point));
-	if (!newpoint)
-		return (NULL);
-	newpoint->x = x;
-	newpoint->y = y;
-	newpoint->z = z;
-	return (newpoint);
-}
-
 t_map	*create_map(void)
 {
 	t_map	*newmap;

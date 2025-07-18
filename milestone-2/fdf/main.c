@@ -30,45 +30,43 @@ static int	setup(void **mlx, void **mlx_win, t_data *img)
 	return (0);
 }
 
+void	cleanup_fdf(t_app *app)
+{
+	if (!app)
+		return ;
+	if (app->map)
+		free_map(app->map);
+	if (app->mlx_data)
+	{
+		if (app->mlx_data->img.img != NULL)
+			mlx_destroy_image(app->mlx_data->mlx, app->mlx_data->img.img);
+		if (app->mlx_data->mlx_win)
+			mlx_destroy_window(app->mlx_data->mlx, app->mlx_data->mlx_win);
+		if (app->mlx_data->mlx)
+		{
+			mlx_destroy_display(app->mlx_data->mlx);
+			free(app->mlx_data->mlx);
+		}
+		free(app->mlx_data);
+	}
+	free(app);
+}
+
 int	close_fdf(t_app *app)
 {
-	free_map(app->map);
-	if (app->mlx_data->img.img != NULL)
-    	mlx_destroy_image(app->mlx_data->mlx, app->mlx_data->img.img);
-    mlx_destroy_window(app->mlx_data->mlx, app->mlx_data->mlx_win);
-    mlx_destroy_display(app->mlx_data->mlx);
-    free(app->mlx_data->mlx);
-    free(app->mlx_data);
-    free(app);
-    exit(1);
+	cleanup_fdf(app);
+	exit(0);
 	return (0);
 }
 
-#include <stdio.h>  // for printf
-
-void	print_map_points(t_map *map)
+int	error_exit(t_app *app, char *message)
 {
-	int i, j;
-
-	if (!map || !map->points)
-	{
-		printf("Map is empty or not allocated.\n");
-		return;
-	}
-	printf("Map Dimensions: %d rows x %d columns\n", map->rows, map->columns);
-	for (i = 0; i < map->rows; i++)
-	{
-		for (j = 0; j < map->columns; j++)
-		{
-			printf("(%d,%d,%d) ",
-				map->points[i][j].x,
-				map->points[i][j].y,
-				map->points[i][j].z);
-		}
-		printf("\n");
-	}
+	if (message)
+		perror(message);
+	cleanup_fdf(app);
+	exit(1);
+	return (ERROR);
 }
-
 
 int	main(int argc, char **argv)
 {
@@ -76,23 +74,24 @@ int	main(int argc, char **argv)
 
 	app = malloc(sizeof(t_app));
 	if (!app)
-		return (perror("Malloc error initializing program"),ERROR);
+		return (perror("Malloc error initializing program"), ERROR);
 	if (argc != 2)
-		return (perror("Program only takes 1 arg"), ERROR);
+		return (close_fdf(app), perror("Program only takes 1 arg"), ERROR);
 	app->map = NULL;
 	if (parse_map(argv[1], &app->map) != 0)
 		return (perror("Error parsing map"), ERROR);
 	app->mlx_data = malloc(sizeof(t_mlx_data));
 	if (!app->mlx_data)
 		return (perror("Malloc error initializing mlx_data"), ERROR);
-	if (setup(&app->mlx_data->mlx, &app->mlx_data->mlx_win, &app->mlx_data->img) != 0)
-	{
-		close_fdf(app);
-		return (perror("Error on setup"), ERROR);
-	}
-	//print_map_points(app->map);
-	draw_map_points(app->map, MAP_GAP, app->mlx_data->img);
-	mlx_put_image_to_window(app->mlx_data->mlx, app->mlx_data->mlx_win, app->mlx_data->img.img, 0, 0);
+	if (setup(&app->mlx_data->mlx,
+			&app->mlx_data->mlx_win, &app->mlx_data->img) != 0)
+		return (error_exit(app, "Error on setup"));
+	app->current_gap = MAP_GAP;
+	draw_map_points(app->map, app->current_gap, app->mlx_data->img);
+	mlx_put_image_to_window(app->mlx_data->mlx,
+		app->mlx_data->mlx_win, app->mlx_data->img.img, 0, 0);
+	mlx_mouse_hook(app->mlx_data->mlx_win, handle_zoom, app);
 	mlx_key_hook(app->mlx_data->mlx_win, &handle_keypress, app);
+	mlx_hook(app->mlx_data->mlx_win, 17, 0, &handle_window_close, app);
 	mlx_loop(app->mlx_data->mlx);
 }

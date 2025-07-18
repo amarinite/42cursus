@@ -12,39 +12,63 @@
 
 #include "fdf.h"
 
-int	abs(int num)
+static t_bresenham	init_bresenham(t_point start, t_point end)
 {
-	if (num >= 0)
-		return (num);
-	return (num * -1);
+	t_bresenham	b;
+
+	b.dx = abs(end.x - start.x);
+	b.dy = abs(end.y - start.y);
+	if (start.x < end.x)
+		b.step_x = 1;
+	else
+		b.step_x = -1;
+	if (start.y < end.y)
+		b.step_y = 1;
+	else
+		b.step_y = -1;
+	b.err = b.dx - b.dy;
+	return (b);
 }
 
-void	draw_line(t_point prev, t_point curr, t_data img)
+static void	update_bresenham_step(t_bresenham *b, int *x, int *y)
 {
-	int		dx;
-	int		dy;
-	int		steps;
-	double	x_inc;
-	double	y_inc;
+	int	e2;
 
-	dx = curr.x - prev.x;
-	dy = curr.y - prev.y;
-	if (abs(dx) > abs(dy))
-		steps = abs(dx);
-	else
-		steps = abs(dy);
-	/*if (steps == 0)
+	e2 = 2 * b->err;
+	if (e2 > -(b->dy))
 	{
-		my_pixel_put(&img, prev.x, prev.y, 0xFFFFFFFF);
-		return;
-		}*/
-	x_inc = dx / (double) steps;
-	y_inc = dy / (double) steps;
-	while (steps >= 0)
+		b->err -= b->dy;
+		*x += b->step_x;
+	}
+	if (e2 < b->dx)
 	{
-		my_pixel_put(&img, round(prev.x), round(prev.y), 0xFFFFFFFF);
-		prev.x += x_inc;
-		prev.y += y_inc;
-		steps--;
+		b->err += b->dx;
+		*y += b->step_y;
+	}
+}
+
+void	draw_line(t_point start, t_point end, t_data img)
+{
+	t_bresenham	b;
+	int			x;
+	int			y;
+	int			total_steps;
+	int			current_step;
+
+	current_step = 0;
+	b = init_bresenham(start, end);
+	x = start.x;
+	y = start.y;
+	total_steps = abs(end.x - start.x) + abs(end.y - start.y);
+	if (total_steps == 0)
+		total_steps = 1;
+	while (1)
+	{
+		my_pixel_put(&img, x, y, interpolate_color(start.color, end.color,
+				(double)current_step / total_steps));
+		if (x == end.x && y == end.y)
+			break ;
+		update_bresenham_step(&b, &x, &y);
+		current_step++;
 	}
 }
