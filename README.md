@@ -11,7 +11,7 @@ My personal repo for my progress in 42 Barcelona.
 |**[get_next_line](https://github.com/amarinite/42cursus/tree/main/milestone-1/get_next_line/)**|C|June 2025|Write a function which returns a line read from a file descriptor (bonus: multiple file descriptors without losing the reading thread on each of them)|125✅|
 |**[ft_printf](https://github.com/amarinite/42cursus/)**|C|June 2025|Reproduce basic functioning of `prinft` function (flags implemented: `%c`, `%s`, `%i`, `%d`, `%u`, `%x`, `%X`, `%p`, `%%`)|100✅|
 |**[push_swap](https://github.com/amarinite/42cursus/)**|C|??|Given an array of random integers, two stacks, and a limited set of moves (e.g. rotate entire stack up or down), write to the console the smallest number of instructions required to sort the array.|??|
-|**[minitalk/pipex](https://github.com/amarinite/42cursus/)**|C|??|??|??|
+|**[pipex🧪](https://github.com/amarinite/42cursus/)**|C|??|??|??|
 |**[FdF🥅](https://github.com/amarinite/42cursus//tree/main/milestone-2/fdf)**|C|July 2025|Create a 3D wireframe model viewer that renders 3D maps in isometric projection using basic C and a graphics library (MiniLibX).|110✅|
 |**[philosophers](https://github.com/amarinite/42cursus/)**|C|??|42's take on the classic [Dining philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem) using threads and mutexes.|??|
 |**[minishell](https://github.com/amarinite/42cursus/)**|C|??|Recreate a small Bash-inspired shell for UNIX.|??|
