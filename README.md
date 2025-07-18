@@ -12,7 +12,7 @@ My personal repo for my progress in 42 Barcelona.
 |**[ft_printf](https://github.com/amarinite/42cursus/)**|C|June 2025|Reproduce basic functioning of `prinft` function (flags implemented: `%c`, `%s`, `%i`, `%d`, `%u`, `%x`, `%X`, `%p`, `%%`)|100|
 |**[push_swap](https://github.com/amarinite/42cursus/)**|C|??|Given an array of random integers, two stacks, and a limited set of moves (e.g. rotate entire stack up or down), write to the console the smallest number of instructions required to sort the array.|??|
 |**[minitalk/pipex](https://github.com/amarinite/42cursus/)**|C|??|??|??|
-|**[so_long/FdF/fract-ol](https://github.com/amarinite/42cursus/)**|C|??|??|??|
+|**[FdF](https://github.com/amarinite/42cursus/)**|C|July 2025|Create a 3D wireframe model viewer that renders 3D maps in isometric projection using basic C and a graphics library (MiniLibX).|110|
 |**[philosophers](https://github.com/amarinite/42cursus/)**|C|??|42's take on the classic [Dining philosophers problem](https://en.wikipedia.org/wiki/Dining_philosophers_problem) using threads and mutexes.|??|
 |**[minishell](https://github.com/amarinite/42cursus/)**|C|??|Recreate a small Bash-inspired shell for UNIX.|??|
 |**[cpp_modules](https://github.com/amarinite/42cursus/)**|C++|??|10 "mini" projects to learn the basics of C++ (98 standard 👴) with a strong focus on OOP|??|
