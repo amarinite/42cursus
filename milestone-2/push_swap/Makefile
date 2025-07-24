@@ -1,11 +1,13 @@
 NAME = push_swap
-SRC = main.c \
+SRC = error_check.c \
 		list_utils.c \
+		main.c \
 		push.c \
-		swap.c \
-		rotate.c \
 		reverse_rotate.c \
+		rotate.c \
 		sort.c \
+		stack_init.c \
+		swap.c \
 		turkish.c
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a

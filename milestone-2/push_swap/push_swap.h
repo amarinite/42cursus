@@ -13,7 +13,14 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+#include <limits.h>
 # include "libft/libft.h"
+
+typedef struct s_stack
+{
+	struct s_node	*head;
+	int				size;
+} t_stack;
 
 typedef struct s_node
 {
@@ -27,24 +34,27 @@ typedef struct s_node
 }	t_node;
 
 t_node	*new_node(int content);
-void	append_node(t_node **head, t_node *new_node);
-int		initialize_stack(t_node **head, int argc, char **args);
+t_stack	*new_stack(void);
+void	append_node_to_stack(t_stack *stack, t_node *new_node);
+int		initialize_stack(t_stack *stack, int argc, char **args);
+int		handle_single_arg(t_stack *stack, char *arg);
+int		check_overflow(char **args, int size);
 int		check_duplicates(char **args, int size);
-t_node	*pop(t_node **head);
-t_node	*pop_last(t_node **head);
-void	push(t_node **head, t_node *new_node);
-void	pa(t_node **stack_b, t_node **stack_a);
-void	pb(t_node **stack_a, t_node **stack_b);
-void	sa(t_node **stack_a);
-void	sb(t_node **stack_b);
-void	ss(t_node **stack_a, t_node **stack_b);
-void	ra(t_node **stack_a);
-void	rb(t_node **stack_b);
-void	rr(t_node **stack_a, t_node **stack_b);
-void	rra(t_node **stack_a);
-void	rrb(t_node **stack_b);
-void	rrr(t_node **stack_a, t_node **stack_b);
-void	sort(t_node **stack_a, t_node **stack_b, int argc);
-void	turkish(t_node **stack_a, t_node **stack_b);
+t_node	*pop_from_stack(t_stack *stack);
+t_node	*pop_last_from_stack(t_stack *stack);
+void	push(t_stack *stack, t_node *new_node);
+void	pa(t_stack *stack_b, t_stack *stack_a);
+void	pb(t_stack *stack_a, t_stack *stack_b);
+void	sa(t_stack *stack_a);
+void	sb(t_stack *stack_b);
+void	ss(t_stack *stack_a, t_stack *stack_b);
+void	ra(t_stack *stack_a);
+void	rb(t_stack *stack_b);
+void	rr(t_stack *stack_a, t_stack *stack_b);
+void	rra(t_stack *stack_a);
+void	rrb(t_stack *stack_b);
+void	rrr(t_stack *stack_a, t_stack *stack_b);
+void	sort(t_stack *stack_a, t_stack *stack_b);
+void	turkish(t_stack *stack_a, t_stack *stack_b);
 
 #endif

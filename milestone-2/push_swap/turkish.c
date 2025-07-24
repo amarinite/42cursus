@@ -12,7 +12,8 @@
 
 #include "push_swap.h"
 
-void	turkish(t_node **stack_a, t_node **stack_b)
+void	turkish(t_stack *stack_a, t_stack *stack_b)
 {
-
+	// Not implemented
+	return ;
 }

@@ -12,24 +12,26 @@
 
 #include "push_swap.h"
 
-void	rotate(t_node **stack)
+void	rotate(t_stack *stack)
 {
-	append_node(stack, pop(stack));
+	t_node *first_node = pop_from_stack(stack);
+	if (first_node)
+		append_node_to_stack(stack, first_node);
 }
 
-void	ra(t_node **stack_a)
+void	ra(t_stack *stack_a)
 {
 	rotate(stack_a);
 	ft_putstr_fd("ra\n", 1);
 }
 
-void	rb(t_node **stack_b)
+void	rb(t_stack *stack_b)
 {
 	rotate(stack_b);
 	ft_putstr_fd("rb\n", 1);
 }
 
-void	rr(t_node **stack_a, t_node **stack_b)
+void	rr(t_stack *stack_a, t_stack *stack_b)
 {
 	rotate(stack_a);
 	rotate(stack_b);

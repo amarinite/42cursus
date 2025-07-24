@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amarquez <amarquez@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/14 14:58:51 by amarquez          #+#    #+#             */
-/*   Updated: 2025/05/14 14:58:52 by amarquez         ###   ########.fr       */
+/*   Created: 2025/07/24 12:54:38 by amarquez          #+#    #+#             */
+/*   Updated: 2025/07/24 12:54:42 by amarquez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(char *str)
+long int	ft_atol(char *str)
 {
 	int	i;
 	int	sign;
-	int	number;
+	long int	number;
 
 	i = 0;
 	sign = 1;

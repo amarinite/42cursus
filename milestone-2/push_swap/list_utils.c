@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "push_swap.h"
 
 t_node	*new_node(int content)
@@ -21,6 +20,7 @@ t_node	*new_node(int content)
 	if (new_node == NULL)
 		return (NULL);
 	new_node->content = content;
+	new_node->ranking = 0;
 	new_node->is_above = 0;
 	new_node->is_cheapest = 0;
 	new_node->prev = NULL;
@@ -29,83 +29,71 @@ t_node	*new_node(int content)
 	return (new_node);
 }
 
-void	append_node(t_node **head, t_node *new_node)
+t_stack	*new_stack(void)
+{
+	t_stack	*stack;
+
+	stack = (t_stack *)malloc(sizeof(t_stack));
+	if (!stack)
+		return (NULL);
+	stack->head = NULL;
+	stack->size = 0;
+	return (stack);
+}
+
+void	append_node_to_stack(t_stack *stack, t_node *new_node)
 {
 	t_node	*curr;
 
-	if (!new_node)
+	if (!new_node || !stack)
 		return ;
-	if (!*head)
+	if (!stack->head)
 	{
-		*head = new_node;
+		stack->head = new_node;
+		stack->size = 1;
 		return ;
 	}
-	curr = *head;
+	curr = stack->head;
 	while (curr->next != NULL)
 		curr = curr->next;
 	curr->next = new_node;
 	new_node->prev = curr;
+	stack->size++;
 }
 
-t_node	*pop(t_node **head)
+t_node	*pop_from_stack(t_stack *stack)
 {
 	t_node	*node;
 
-	if (!head || !*head)
+	if (!stack || !stack->head)
 		return (NULL);
-	node = *head;
-	*head = node->next;
-	if (*head)
-		(*head)->prev = NULL;
+	node = stack->head;
+	stack->head = node->next;
+	if (stack->head)
+		stack->head->prev = NULL;
 	node->next = NULL;
+	stack->size--;
 	return (node);
 }
 
-t_node	*pop_last(t_node **head)
+t_node	*pop_last_from_stack(t_stack *stack)
 {
 	t_node	*last;
 
-	if (!head || !*head)
+	if (!stack || !stack->head)
 		return (NULL);
-	if (!(*head)->next)
+	if (!stack->head->next)
 	{
-		last = *head;
-		*head = NULL;
+		last = stack->head;
+		stack->head = NULL;
+		stack->size = 0;
 		return (last);
 	}
-	last = *head;
+	last = stack->head;
 	while (last->next)
 		last = last->next;
 	last->prev->next = NULL;
 	last->prev = NULL;
+	stack->size--;
 	return (last);
-}
-
-int	initialize_stack(t_node **head, int argc, char **args)
-{
-	int		i;
-	int		j;
-	t_node	*node;
-
-	i = 0;
-	while (i < argc)
-	{
-		if (args[i][0] == '\0')
-			return (0);
-		j = 0;
-		if ((args[i][0] == '+' || args[i][0] == '-') && args[i][1] != '\0')
-			j++;
-		while (args[i][j] != '\0')
-		{
-			if (!ft_isdigit(args[i][j]))
-				return (0);
-			j++;
-		}
-		if (!check_duplicates(args, argc))
-			return (0);
-		node = new_node(ft_atoi(args[i]));
-		append_node(head, node);
-		i++;
-	}
-	return (1);
 }

@@ -12,24 +12,29 @@
 
 #include "push_swap.h"
 
-void	push(t_node **head, t_node *new_node)
+void	push(t_stack *stack, t_node *new_node)
 {
-	if (!head || !new_node)
+	if (!stack || !new_node)
 		return ;
-	new_node->next = *head;
-	if (*head)
-		(*head)->prev = new_node;
-	*head = new_node;
+	new_node->next = stack->head;
+	if (stack->head)
+		stack->head->prev = new_node;
+	stack->head = new_node;
+	stack->size++;
 }
 
-void	pa(t_node **stack_b, t_node **stack_a)
+void	pa(t_stack *stack_b, t_stack *stack_a)
 {
-	push(stack_a, pop(stack_b));
+	t_node *node = pop_from_stack(stack_b);
+	if (node)
+		push(stack_a, node);
 	ft_putstr_fd("pa\n", 1);
 }
 
-void	pb(t_node **stack_a, t_node **stack_b)
+void	pb(t_stack *stack_a, t_stack *stack_b)
 {
-	push(stack_b, pop(stack_a));
+	t_node *node = pop_from_stack(stack_a);
+	if (node)
+		push(stack_b, node);
 	ft_putstr_fd("pb\n", 1);
 }
