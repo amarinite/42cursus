@@ -14,7 +14,9 @@
 
 void	rotate(t_stack *stack)
 {
-	t_node *first_node = pop_from_stack(stack);
+	t_node	*first_node;
+
+	first_node = pop_from_stack(stack);
 	if (first_node)
 		append_node_to_stack(stack, first_node);
 }

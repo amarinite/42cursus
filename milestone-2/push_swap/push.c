@@ -25,7 +25,9 @@ void	push(t_stack *stack, t_node *new_node)
 
 void	pa(t_stack *stack_b, t_stack *stack_a)
 {
-	t_node *node = pop_from_stack(stack_b);
+	t_node	*node;
+
+	node = pop_from_stack(stack_b);
 	if (node)
 		push(stack_a, node);
 	ft_putstr_fd("pa\n", 1);
@@ -33,7 +35,9 @@ void	pa(t_stack *stack_b, t_stack *stack_a)
 
 void	pb(t_stack *stack_a, t_stack *stack_b)
 {
-	t_node *node = pop_from_stack(stack_a);
+	t_node	*node;
+
+	node = pop_from_stack(stack_a);
 	if (node)
 		push(stack_b, node);
 	ft_putstr_fd("pb\n", 1);

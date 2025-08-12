@@ -21,8 +21,10 @@ t_node	*new_node(int content)
 		return (NULL);
 	new_node->content = content;
 	new_node->ranking = 0;
+	new_node->position_from_top = 0;
+	new_node->position_from_bottom = 0;
+	new_node->cost = 0;
 	new_node->is_above = 0;
-	new_node->is_cheapest = 0;
 	new_node->prev = NULL;
 	new_node->next = NULL;
 	new_node->target = NULL;

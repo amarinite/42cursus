@@ -51,29 +51,3 @@ int	check_duplicates(char **args, int size)
 	}
 	return (1);
 }
-
-int	handle_single_arg(t_stack *stack, char *arg)
-{
-	char	**splitted_args;
-	int		i;
-	int		result;
-
-	splitted_args = ft_split(arg, ' ');
-	if (!splitted_args)
-		return (0);
-	i = 0;
-	while (splitted_args[i])
-		i++;
-	if (i == 1)
-		return (free(splitted_args[i - 1]), free(splitted_args), 0);
-	result = initialize_stack(stack, i, splitted_args);
-	while (i > 0)
-	{
-		free(splitted_args[i - 1]);
-		i--;
-	}
-	free(splitted_args);
-	if (!result)
-		ft_putstr_fd("Error\n", 1);
-	return (result);
-}

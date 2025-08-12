@@ -21,11 +21,13 @@ SRCS =	ft_atoi.c \
 	ft_isdigit.c \
 	ft_isprint.c \
 	ft_itoa.c \
+	ft_max.c \
 	ft_memchr.c \
 	ft_memcmp.c \
 	ft_memcpy.c \
 	ft_memmove.c \
 	ft_memset.c \
+	ft_min.c \
 	ft_putchar_fd.c \
 	ft_putendl_fd.c \
 	ft_putnbr_fd.c \
@@ -71,12 +73,12 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 # Compile source files into object files
-$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -I. -c $< -o $@
+$(OBJ_DIR)/%.o: %.c libft.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I. -c $< -o $@
 
 # Create the library
 $(NAME): $(OBJS)
-	@ar rcs $@ $^
+	ar rcs $@ $^
 	@echo "Library $(NAME) created successfully!"
 
 # Clean object files

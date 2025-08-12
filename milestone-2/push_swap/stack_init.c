@@ -12,75 +12,88 @@
 
 #include "push_swap.h"
 
-// function assign_rankings(stack, stack_size):
-//     remaining_ranks = stack_size
+static t_node	*get_max_unranked_node(t_stack *stack)
+{
+	t_node	*curr;
+	t_node	*max_node;
+	int		max_val;
 
-//     while remaining_ranks > 0:
-//         current_max_value = INT_MIN
-//         node_to_rank = NULL
+	curr = stack->head;
+	max_node = NULL;
+	max_val = INT_MIN;
+	while (curr != NULL)
+	{
+		if (curr->content == INT_MIN && curr->ranking == 0)
+			curr->ranking = 1;
+		if (curr->content > max_val && curr->ranking == 0)
+		{
+			max_val = curr->content;
+			max_node = curr;
+		}
+		curr = curr->next;
+	}
+	return (max_node);
+}
 
-//         // Find the biggest unranked value
-//         for each node in stack:
-//             if node.value == INT_MIN and node.ranking == 0:
-//                 node.ranking = 1  // Handle edge case
-
-//
-
-void	set_ranking(t_stack *stack)
+static void	set_ranking(t_stack *stack)
 {
 	int		remaining_ranks;
-	int		max_val;
 	t_node	*node_to_rank;
-	t_node	*curr;
 
 	remaining_ranks = stack->size;
-	curr = stack->head;
 	while (remaining_ranks > 0)
 	{
-		curr = stack->head;
-		max_val = INT_MIN;
-		node_to_rank = NULL;
-		while (curr != NULL)
-		{
-			if (curr->content == INT_MIN && curr->ranking == 0)
-				curr->ranking = 1;
-			if (curr->content > max_val && curr->ranking == 0)
-			{
-				max_val = curr->content;
-				node_to_rank = curr;
-			}
-			curr = curr->next;
-		}
+		node_to_rank = get_max_unranked_node(stack);
 		if (node_to_rank)
 			node_to_rank->ranking = remaining_ranks;
 		remaining_ranks--;
 	}
 }
 
+static int	is_valid_number(char *str)
+{
+	int	i;
+
+	if (!str || str[0] == '\0')
+		return (0);
+	i = 0;
+	if ((str[0] == '+' || str[0] == '-') && str[1] != '\0')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+static int	validate_args(char **args, int argc)
+{
+	int	i;
+
+	i = 0;
+	while (i < argc)
+	{
+		if (!is_valid_number(args[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	initialize_stack(t_stack *stack, int argc, char **args)
 {
 	int		i;
-	int		j;
 	t_node	*node;
 
-	if (!stack)
+	if (!stack || !validate_args(args, argc))
+		return (0);
+	if (!check_overflow(args, argc) || !check_duplicates(args, argc))
 		return (0);
 	i = 0;
 	while (i < argc)
 	{
-		if (args[i][0] == '\0')
-			return (0);
-		j = 0;
-		if ((args[i][0] == '+' || args[i][0] == '-') && args[i][1] != '\0')
-			j++;
-		while (args[i][j] != '\0')
-		{
-			if (!ft_isdigit(args[i][j]))
-				return (0);
-			j++;
-		}
-		if (!check_overflow(args, argc) || !check_duplicates(args, argc))
-			return (0);
 		node = new_node(ft_atoi(args[i]));
 		if (!node)
 			return (0);

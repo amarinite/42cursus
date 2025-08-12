@@ -14,7 +14,7 @@
 
 void	reverse_rotate(t_stack *stack)
 {
-	t_node *last_node;
+	t_node	*last_node;
 
 	last_node = pop_last_from_stack(stack);
 	if (last_node)
